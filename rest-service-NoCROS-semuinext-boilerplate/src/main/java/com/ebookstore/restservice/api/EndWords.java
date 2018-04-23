@@ -28,7 +28,7 @@ public class EndWords implements Serializable{
     }
 
     public String getEndingWord(){
-        return this.startingWord;
+        return this.endingWord;
     }
 
 
