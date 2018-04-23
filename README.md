@@ -6,7 +6,9 @@ Add security to springboot REST APP
 -----------------------------------
 - How to run
 
-'''
-mvn clean package
-java -jar target/rest-service-0.0.1-SNAPSHOT.jar.original
-'''
+
+
+```cmd
+puts `mvn clean package'
+'java -jar target/rest-service-0.0.1-SNAPSHOT.jar.original`
+```
