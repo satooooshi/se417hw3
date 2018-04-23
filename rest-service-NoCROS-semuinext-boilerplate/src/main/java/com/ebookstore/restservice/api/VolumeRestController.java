@@ -55,43 +55,89 @@ public class BookRestController {
 
 */
 
-
-import com.ebookstore.restservice.domain.Volume;
-import com.ebookstore.restservice.repository.VolumeRepository;
-import com.ebookstore.restservice.service.VolumeService;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import java.util.Arrays;
+import com.ebookstore.restservice.api.EndWords;
+
 
 
 @RestController
-@RequestMapping("/api/volumes")
+@RequestMapping("/api")
 public class VolumeRestController {
 
-    @Autowired
-    VolumeService volumeService;
+    protected final Log logger = LogFactory.getLog(getClass());
 
-    @GetMapping
-    public List<Volume> getAllVolumes() {
-        List<Volume> volumes = volumeService.findAll();
-        return volumes;
+
+    private String sw;
+    private String ew;
+
+    //POST endwords
+    //format : JSON Ex. {"startingWord":"coda","endingWord":"fade"}
+    @RequestMapping(value = "/endwords", method = {RequestMethod.POST}, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String postWords(@RequestBody EndWords words){
+        sw=words.getStaringWord();
+        ew=words.getEndingWord();
+
+        logger.info("Got startingWord "+sw+" and "+ew+" .");
+
+        return "Got endingWords "+words.toString();
     }
 
-    @GetMapping(path = "/{title}")
-    public Volume getVolume(@PathVariable String title) {
-        System.out.print(title);
-        return volumeService.findOne(title);
+
+    //GET
+    @RequestMapping("/result")
+    @ResponseBody
+    public List<String> GetLadder() {
+        logger.info("Start finding word ladder from "+sw+" to "+ ew+".");
+        //
+        //MAKEWORDLADDERHERE
+        //
+        logger.info("Finish finding word ladder.");
+
+        String[] ladder = {"foo","bar","baz"};
+        return Arrays.asList(ladder);
     }
 
-    /*
-    @GetMapping(path="/search")
-    public List<Volume>SearchVolumes(BookResourceQuery query){
-        List<Volume> volumes=volumeService.findAllByQuery(query);
-        return volumes;
+
+    //*********************** Unrelated Codes From Here *************************************
+
+    //GET -> hello will be on the page.
+    @GetMapping("/testGET")
+    public String testGet() {
+        return "Hello";
     }
-    */
+
+    //POST -> hey will not be on the page.
+    //When
+    //curl -X POST -H 'Content-Type:application/json' -d 'HELLO!!' http://localhost:8080/api/testPOST
+    //Then
+    //hey HELLO!!! will be shown up on terminal indicating POST success.
+    @RequestMapping(
+            value = "/testPOST",
+            method = RequestMethod.POST,
+            headers = {
+                    "content-type=*",
+                    "accept=application/json"
+            }
+    )
+    //this return value directly become the responced contents.
+    @ResponseBody
+    public String testPost(@RequestBody String body) {
+        return "Hey "+body+"!";
+
+    //***************************************************************************
+    }
 
 }
+
+
 
