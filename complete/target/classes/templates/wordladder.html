@@ -1,0 +1,22 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Result</title>
+</head>
+<body>
+<h1>Result</h1>
+<p>
+    <tr th:each="word:${foundladder}">
+        <td th:text="${word}" class="result"></td>
+    </tr>
+<form action="endwords" method="get">
+    <input type="submit" value="GoBack"/>
+</form>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="SignOut"/>
+</form>
+</p>
+</body>
+</html>
