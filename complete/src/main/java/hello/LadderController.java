@@ -71,7 +71,7 @@ public class LadderController {
 
     @GetMapping("/wordladder")
     public String wordladder(Model model, @RequestParam(value="start", required=true) @NotBlank String start, @RequestParam(value="end", required=true) @NotBlank String end) {
-        Lexicon lexicon=new Lexicon("https://raw.githubusercontent.com/satooooshi/se417hw3/dev/rest-service-NoCROS-semuinext-boilerplate/src/main/resources/static/dictionary.txt");
+        Lexicon lexicon=new Lexicon("https://raw.githubusercontent.com/satooooshi/se417hw3/dev/complete/src/main/resources/dictionary.txt");
         logger.info("start finding wordladder from "+start+" to "+end+" with dictionary at github.com/satooooshi"  );
         logger.info("wait for a sec to comlete finding wordladder, this would take about 20 seconds.");
         WordLadder wordladder=new WordLadder(start,end,lexicon.getDictionary());
